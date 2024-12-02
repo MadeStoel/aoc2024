@@ -4,18 +4,19 @@ const lines = readFileSync('input.txt').toString('utf8').split('\r\n').filter(Bo
 
 let safe = 0;
 
+function inOrder(nums, operator) {
+    return nums.every((num, i) => {
+        if (i === 0) return true;
+
+        return eval(num + operator + nums[i - 1]);
+    });
+}
+
 function isSafe(nums) {
-    const increasing = nums.every((num, i) =>{
-        if(i === 0) return true;
-        return num >  nums[i - 1];
-    });
+    const increasing = inOrder(nums, '>');
+    const decreasing = inOrder(nums, '<');
 
-    const decreasing = nums.every((num, i) =>{
-        if(i === 0) return true;
-        return num < nums[i - 1];
-    });
-
-    if(!increasing && !decreasing) return false;
+    if (!increasing && !decreasing) return false;
 
     return nums.every((num, i) => {
         const prevNum = i === 0 ? num + 1 : nums[i - 1];
@@ -27,7 +28,7 @@ function isSafe(nums) {
 lines.forEach(line => {
     const nums = line.split(' ').map(Number);
 
-    if(isSafe(nums)) safe++;
+    if (isSafe(nums)) safe++;
 });
 
 console.log(safe);
