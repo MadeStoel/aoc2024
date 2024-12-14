@@ -1,6 +1,6 @@
 import { readFileSync } from "fs";
 
-const lines = readFileSync("input.txt").toString("utf8").split("\n").filter(Boolean).map(line => line.split(""));
+const lines = readFileSync("input.txt").toString("utf8").split("\r\n").filter(Boolean).map(line => line.split(""));
 
 const processed  = [];
 const directions = [[-1, 0], [0, 1], [1, 0], [0, -1]];
@@ -32,7 +32,6 @@ function mapCrop(row, col) {
 
         if ( !processed.includes(toCoordString(nextRow, nextCol)) ) mapCrop(nextRow, nextCol);
     }
-
 }
 
 for ( let row = 0; row < lines.length; row++ ) {
